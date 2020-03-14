@@ -8,6 +8,7 @@ use App\Http\Resources\User as UserResource;
 use App\Meeting;
 use Auth;
 
+
 class UserController extends Controller
 {
         public function store(Request $request){
@@ -50,7 +51,5 @@ class UserController extends Controller
       return response()->json(404); 
     }
     
-    public function signin(Request $request){
-        return "it works";
-    }
+ 
 }

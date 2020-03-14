@@ -7,9 +7,15 @@ use App\User;
 use App\Meeting;
 use App\Http\Resources\Meeting as MeetingResource;
 use App\Http\Resources\MeetingCollection as MeetingCollection;
+use Auth;
+use JWTAuth;
 
 class RegistrationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
       /**
      * Store a newly created resource in storage.
      *

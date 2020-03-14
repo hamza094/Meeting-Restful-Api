@@ -6,9 +6,14 @@ use Illuminate\Http\Request;
 use App\Meeting;
 use App\Http\Resources\Meeting as MeetingResource;
 use App\Http\Resources\MeetingCollection as MeetingCollection;
-
+use Illuminate\Support\Facades\Auth;
+use JWTAuth;
 class MeetingController extends Controller
 {
+ public function __construct()
+    {
+        $this->middleware('auth:api',['only' => ['store','update','delete']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -53,9 +58,13 @@ class MeetingController extends Controller
                         
         ]);
         
+          if(! $user=JWTAuth::parseToken()->authenticate()){
+            return response()->json(['msg'=>'User not found'],404);
+        }
+        
       $title=$request->input('title');
       $description=$request->input('description');
-      $user_id=$request->input('user_id');
+      $user_id=$user->id;
         
         $meeting=new MeetingResource(Meeting::create([
            'title'=>$title,
@@ -125,10 +134,15 @@ class MeetingController extends Controller
                         
         ]);
         
+         if(! $user=JWTAuth::parseToken()->authenticate()){
+            return response()->json(['msg'=>'User not found'],404);
+        }
+        
         $title=$request->input('title');
         $description=$request->input('description');
-        $user_id=$request->input('user_id');
-        
+        $user_id=$user->id;
+
+                
       $meeting=new MeetingResource(Meeting::findOrFail($id));
         
         if(!$meeting->users()->where('users.id',$user_id)->first()){
@@ -160,10 +174,14 @@ class MeetingController extends Controller
     {
           $meeting=new MeetingResource(Meeting::findOrFail($id));
         
-        /*  if(!$meeting->users()->where('users.id',$user->id)->first()){
+        if(! $user=JWTAuth::parseToken()->authenticate()){
+            return response()->json(['msg'=>'User not found'],404);
+        }
+        
+        if(!$meeting->users()->where('users.id',$user->id)->first()){
             return response()->json(['msg'=>'users not registered for meeting,update not successfull'],401);
-        }*/
-    
+        }
+       
         $meeting->users()->detach();
         
         if(!$meeting->delete()){
