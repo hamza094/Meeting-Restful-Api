@@ -32,6 +32,8 @@
         <env name="MAIL_DRIVER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
+        <server name="JWT_SECRET" value="rPaULXkmaeygrLDKIcJtNyp2S5waEl6xpYDaEXG7DsSfr8BvtDbIizNOXGRe9zW1"/>
+
     
     </php>
 </phpunit>

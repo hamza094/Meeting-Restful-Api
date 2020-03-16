@@ -46,7 +46,7 @@ class MeetingsTest extends TestCase
         $meeting=factory(Meeting::class)->create();
         $user=factory(User::class)->create();
         $token = JWTAuth::fromUser($user);
-        $response=$this->withoutExceptionHandling()->post("/api/v1/meeting/?token=".$token,$meeting->toArray())
+        $response=$this->post("/api/v1/meeting/?token=".$token,$meeting->toArray())
             ->assertStatus(201);
     }
     
@@ -58,7 +58,7 @@ class MeetingsTest extends TestCase
         $title="kola bola";
         $desc='lorem ipsum jipsum';
         $token = JWTAuth::fromUser($user);
-        $response=$this->actingAs($user)->patch("api/v1/meeting/{$meeting->id}/?token=".$token,['title'=>$title,'description'=>$desc])
+        $response=$this->withExceptionHandling()->actingAs($user)->patch("api/v1/meeting/{$meeting->id}/?token=".$token,['title'=>$title,'description'=>$desc])
             ->assertStatus(201);
     }
     
@@ -68,7 +68,7 @@ class MeetingsTest extends TestCase
         $user=factory(User::class)->create();
         $meeting->users()->attach($user);
         $token = JWTAuth::fromUser($user);
-        $response=$this->actingAs($user)->delete("api/v1/meeting/{$meeting->id}/?token=".$token)->
+        $response=$this->withoutExceptionHandling()->actingAs($user)->delete("api/v1/meeting/{$meeting->id}/?token=".$token)->
             assertStatus(200);
     }
     
