@@ -1,4 +1,4 @@
-## About RestFul Meeting API[![Build Status](https://travis-ci.org/hamza094/Meeting-Restful-Api.svg?branch=master)](https://travis-ci.org/hamza094/Meeting-Restful-Api)
+## About RestFul Meeting API [![Build Status](https://travis-ci.org/hamza094/Meeting-Restful-Api.svg?branch=master)](https://travis-ci.org/hamza094/Meeting-Restful-Api)
 
 Simple Elegant Laravel API build for handle meeting schedule and it contained the following features:
 
